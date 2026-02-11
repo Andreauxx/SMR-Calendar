@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* ===== Brand Variables (Orange Focus) ===== */
+:root {
+  /* brand palette */
+  --deep-navy: #0B1120;     /* Background */
+  --pure-white: #FFFFFF;    /* Main Text */
+  --vibrant-orange: #EA580C; /* Primary Action / Buttons */
+  --muted-charcoal: #1E293B; /* Card Surfaces */
+  --slate-border: rgba(255, 255, 255, 0.1);
+
+  /* app roles */
+  --background: var(--deep-navy);
+  --foreground: var(--pure-white);
+
+  --card: var(--muted-charcoal);
+  --cardBorder: var(--slate-border);
+
+  --primary: var(--vibrant-orange);
+  --primaryText: var(--pure-white);
+
+  --muted: rgba(30, 41, 59, 0.5);
+  --mutedText: rgba(255, 255, 255, 0.6);
+}
+
+/* Map Tailwind theme tokens */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: #334155;
+  --color-muted: var(--mutedText);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===== SMR Glass Panel Look ===== */
+.glass-panel {
+  background: var(--card);
+  border: 1px solid var(--cardBorder);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+/* ===== FullCalendar Orange Branding ===== */
+.fc {
+  --fc-border-color: var(--slate-border);
+  --fc-page-bg-color: transparent;
+  --fc-today-bg-color: rgba(234, 88, 12, 0.15); /* Orange hint for today */
+}
+
+/* Calendar Header */
+.fc .fc-toolbar-title {
+  color: var(--pure-white);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Navigation Buttons */
+.fc .fc-button {
+  background: var(--muted-charcoal);
+  border: 1px solid var(--slate-border);
+  color: var(--pure-white);
+  border-radius: 8px !important;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.fc .fc-button:hover {
+  background: var(--vibrant-orange) !important;
+  border-color: var(--vibrant-orange) !important;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active, 
+.fc .fc-button-primary:not(:disabled):active {
+  background: var(--vibrant-orange);
+  border-color: var(--vibrant-orange);
+}
+
+/* Day Numbers & Headers */
+.fc .fc-daygrid-day-number,
+.fc .fc-col-header-cell-cushion {
+  color: var(--pure-white);
+  padding: 8px;
+}
+
+/* Selection Highlight */
+.fc .fc-highlight {
+  background: rgba(234, 88, 12, 0.3) !important;
+}
+
+/* Utility Overrides */
+.bg-primary { background-color: var(--primary) !important; }
+.text-primary { color: var(--primary) !important; }
+.border-primary { border-color: var(--primary) !important; }
+
+/* Custom "Reserved" Dot for Legend */
+.status-reserved { background-color: #EF4444; } /* Keep Red for unavailability */
+.status-onhold { background-color: #94A3B8; }   /* Slate for pending */
+.status-available { border: 2px dashed var(--vibrant-orange); }
+
+/* Kill FullCalendar default event styling */
+.fc .fc-daygrid-event {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.fc .fc-event {
+  background: transparent !important;
+  border: none !important;
+}

@@ -1,0 +1,47 @@
+/* Minimal FullCalendar v6 styling (enough for daygrid + events) */
+
+.fc {
+  font-family: inherit;
+}
+
+.fc .fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.fc .fc-button {
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.6rem;
+}
+
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid-section > td,
+.fc .fc-scrollgrid-section > th {
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.fc .fc-col-header-cell-cushion,
+.fc .fc-daygrid-day-number {
+  padding: 0.35rem;
+  text-decoration: none;
+}
+
+.fc .fc-daygrid-day-frame {
+  min-height: 5.5rem;
+}
+
+.fc .fc-daygrid-event {
+  border-radius: 0.5rem;
+  padding: 0.15rem 0.35rem;
+  margin: 0.15rem 0;
+}
+
+.fc .fc-event-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
