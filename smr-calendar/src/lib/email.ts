@@ -2,13 +2,9 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-function dataUrlToAttachment(
-  dataUrl: string | undefined,
-  baseName: string
-) {
+function dataUrlToAttachment(dataUrl?: string, filenameBase = "attachment") {
   if (!dataUrl) return null;
 
-  // expected: data:image/png;base64,XXXX
   const match = dataUrl.match(/^data:(.+);base64,(.+)$/);
   if (!match) return null;
 
@@ -22,11 +18,12 @@ function dataUrlToAttachment(
     "png";
 
   return {
-    filename: `${baseName}.${ext}`,
-    content,      // base64 only
-    contentType,  // important
+    filename: `${filenameBase}.${ext}`,
+    content,
+    contentType,
   };
 }
+
 
 export async function sendNewBookingEmail(input: {
   name: string;
@@ -97,10 +94,11 @@ export async function sendNewBookingEmail(input: {
     </div>
   `;
 
-  const attachments = [
-    dataUrlToAttachment(input.paymentProof, "payment-proof"),
-    dataUrlToAttachment(input.govIdProof, "government-id"),
-  ].filter(Boolean);
+ const attachments = [
+  dataUrlToAttachment(input.paymentProof, "payment-proof"),
+  dataUrlToAttachment(input.govIdProof, "government-id"),
+].filter(Boolean);
+
 
   await resend.emails.send({
     from,

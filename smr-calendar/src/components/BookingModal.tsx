@@ -1,7 +1,11 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { bookingRequestSchema, type BookingRequest } from "@/shared/schema";
+import {
+  bookingRequestSchema,
+  type BookingRequestForm,
+  type BookingRequest,
+} from "@/shared/schema";
 import {
   Dialog,
   DialogContent,
@@ -106,23 +110,25 @@ export function BookingModal({
 }: BookingModalProps) {
   const reserveMutation = useReserve();
 
-  const form = useForm<BookingRequest>({
-    resolver: zodResolver(bookingRequestSchema),
- defaultValues: {
-  name: "",
-  contact: "",
-  messengerUrl: "",
-  start: startStr,
-  end: endStr,
-  package: "",
-  addons: [],
-  paymentProof: "",
-  fulfillment: "Pickup",
-  deliveryAddress: "",
-  govIdProof: "", // ✅ add
-},
+const form = useForm<BookingRequestForm>({
+  resolver: zodResolver(bookingRequestSchema),
+  defaultValues: {
+    name: "",
+    contact: "",
+    messengerUrl: "",
+    start: startStr,
+    end: endStr,
+    package: "",
+    addons: [],
 
-  });
+    paymentProof: "",
+    govIdProof: "",
+
+    fulfillment: "Pickup",
+    deliveryAddress: "",
+  },
+});
+
 
 
   const selectedAddons = form.watch("addons") ?? [];
@@ -158,20 +164,24 @@ const grandTotal = rentalTotal + addonsTotal;
     });
   };
 
-  useEffect(() => {
-  if (isOpen) {
-    form.reset({
-      name: "",
-      contact: "",
-      messengerUrl: "",
-      start: startStr,
-      end: endStr,
-      package: "",
-      addons: [],
-      paymentProof: "",
-    });
-  }
+useEffect(() => {
+  if (!isOpen) return;
+
+  form.reset({
+    name: "",
+    contact: "",
+    messengerUrl: "",
+    start: startStr,
+    end: endStr,
+    package: "",
+    addons: [],
+    paymentProof: "",
+    govIdProof: "",
+    fulfillment: "Pickup",
+    deliveryAddress: "",
+  });
 }, [isOpen, startStr, endStr, form]);
+
 
 
   // Safe date formatting

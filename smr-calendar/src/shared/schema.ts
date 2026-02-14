@@ -9,13 +9,13 @@ export const bookingRequestSchema = z
     end: z.string().min(4),
 
     package: z.string().min(1, "Please select a package"),
-    addons: z.array(z.string()).default([]),
 
-    // proof of payment image (optional for now)
+    // IMPORTANT: keep as optional in INPUT, but you’ll still default it in the form
+    addons: z.array(z.string()).optional(),
+
     paymentProof: z.string().min(10, "Proof of payment is required"),
     govIdProof: z.string().min(10, "Valid government ID is required"),
 
-    // ✅ NEW
     fulfillment: z.enum(["Pickup", "Delivery"]),
     deliveryAddress: z.string().optional().or(z.literal("")),
   })
@@ -31,4 +31,8 @@ export const bookingRequestSchema = z
     }
   });
 
-export type BookingRequest = z.infer<typeof bookingRequestSchema>;
+// ✅ Form values (what RHF uses)
+export type BookingRequestForm = z.input<typeof bookingRequestSchema>;
+
+// ✅ Parsed values (what server gets after safeParse)
+export type BookingRequest = z.output<typeof bookingRequestSchema>;
