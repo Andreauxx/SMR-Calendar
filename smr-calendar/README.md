@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+I made this for our rental business, Used Notion Databases, Will add another database that has relation to easily manage our customers
 ## Getting Started
 
 First, run the development server:
