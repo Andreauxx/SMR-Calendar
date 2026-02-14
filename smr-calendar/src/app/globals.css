@@ -115,3 +115,65 @@ body {
   background: transparent !important;
   border: none !important;
 }
+
+
+/* Mobile: let the calendar scroll instead of clipping */
+@media (max-width: 640px) {
+  .calendar-wrapper .fc {
+    width: 100%;
+  }
+
+  .calendar-wrapper .fc-view-harness {
+    min-height: 520px; /* enough to show full month grid */
+  }
+
+  .calendar-wrapper {
+    overflow-x: auto; /* prevents cut-off if FC calculates wider */
+  }
+
+  .fc .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1.1rem;
+  }
+}
+
+
+/* Make FullCalendar fit better on phones */
+@media (max-width: 480px) {
+  .fc .fc-toolbar {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1.05rem;
+  }
+
+  /* KEY FIX: shrink day cell height on mobile */
+  .fc .fc-daygrid-day-frame {
+    min-height: 3.2rem;
+  }
+
+  .fc .fc-daygrid-day-number {
+    padding: 0.2rem;
+    font-size: 0.85rem;
+  }
+
+  .fc .fc-daygrid-event {
+    padding: 0.1rem 0.25rem;
+    margin: 0.1rem 0;
+  }
+}
+
+/* Prevent horizontal clipping */
+.calendar-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.fc {
+  min-width: 360px; /* keeps layout stable on tiny screens */
+}

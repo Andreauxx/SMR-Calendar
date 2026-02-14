@@ -92,10 +92,7 @@ export default function Home() {
           <Button
             className="hidden sm:flex bg-[var(--slate)] hover:opacity-90 text-[var(--cream)] border border-white/5 gap-2"
             onClick={() =>
-              window.open(
-                "https://m.me/smrprimerentals.",
-                "SMR PRIME RENTALS",
-              )
+              window.open("https://m.me/smrprimerentals", "SMR PRIME RENTALS")
             }
           >
             <MessageCircle className="w-4 h-4" />
@@ -190,7 +187,7 @@ export default function Home() {
           {/* Right Column: Calendar */}
 
           <motion.div variants={itemVariants} className="lg:col-span-8">
-            <div className="glass-panel p-6 rounded-2xl min-h-[600px] h-full flex flex-col">
+            <div className="glass-panel p-4 sm:p-6 rounded-2xl flex flex-col">
               {isLoading ? (
                 <div className="flex-1 flex flex-col items-center justify-center gap-4 text-muted-foreground">
                   <Loader2 className="w-10 h-10 animate-spin text-primary" />
@@ -218,6 +215,10 @@ export default function Home() {
                     unselectCancel=".dialog, .DialogContent"
                     dayMaxEvents={true}
                     events={data?.events || []}
+                    height="auto"
+                    contentHeight="auto"
+                    expandRows={true}
+                    handleWindowResize={true}
                     select={handleDateSelect}
                     dateClick={handleDateClick}
                     eventContent={(arg) => {

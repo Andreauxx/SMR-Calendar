@@ -155,14 +155,15 @@ const grandTotal = rentalTotal + addonsTotal;
     }
   }, [isOpen, startStr, endStr, form]);
 
-  const onSubmit = (data: BookingRequest) => {
-    reserveMutation.mutate(data, {
-      onSuccess: () => {
-        form.reset();
-        onClose();
-      },
-    });
-  };
+// BookingModal.tsx
+const onSubmit = (data: BookingRequestForm) => {
+  reserveMutation.mutate(data, {
+    onSuccess: () => {
+      form.reset();
+      onClose();
+    },
+  });
+};
 
 useEffect(() => {
   if (!isOpen) return;

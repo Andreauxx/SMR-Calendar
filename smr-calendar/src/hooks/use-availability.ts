@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/shared/routes";
-import { type BookingRequest } from "@/shared/schema";
+import { type BookingRequestForm } from "@/shared/schema";
 import { useToast } from "@/hooks/use-toast";
 
 export function useAvailability() {
@@ -32,7 +32,7 @@ export function useReserve() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: BookingRequest) => {
+    mutationFn: async (data: BookingRequestForm) => {
   const res = await fetch(api.reserve.create.path, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
