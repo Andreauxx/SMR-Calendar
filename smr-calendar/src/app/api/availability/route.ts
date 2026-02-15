@@ -5,6 +5,12 @@ export const dynamic = "force-dynamic";
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
+function addOneDay(dateStr: string) {
+  const d = new Date(dateStr + "T00:00:00");
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
 export async function GET() {
   try {
     const database_id = process.env.NOTION_DATABASE_ID!;
@@ -23,11 +29,17 @@ export async function GET() {
 
         const status = props["Return Status"]?.select?.name ?? "Requested";
 
+        const start = dateProp.start.slice(0, 10);
+        const endInclusive = (dateProp.end ?? dateProp.start).slice(0, 10);
+
+        // ✅ FullCalendar expects end EXCLUSIVE for allDay ranges
+        const endExclusive = addOneDay(endInclusive);
+
         return {
           id: page.id,
           title: status === "Approved" ? "Reserved" : "On Hold",
-          start: dateProp.start,
-          end: dateProp.end ?? dateProp.start,
+          start,
+          end: endExclusive,
           allDay: true,
           extendedProps: { status },
         };
@@ -37,6 +49,9 @@ export async function GET() {
     return NextResponse.json({ events });
   } catch (error) {
     console.error("availability route error:", error);
-    return NextResponse.json({ error: "Failed to fetch availability" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch availability" },
+      { status: 500 }
+    );
   }
 }

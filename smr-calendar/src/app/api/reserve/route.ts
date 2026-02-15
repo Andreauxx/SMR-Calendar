@@ -20,6 +20,8 @@ function calcDaysInclusive(startStr: string, endStr: string) {
   return Math.max(Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1, 1);
 }
 
+
+
 function calcDailyRate(days: number) {
   if (days <= 3) return 550;
   if (days <= 6) return 450;
