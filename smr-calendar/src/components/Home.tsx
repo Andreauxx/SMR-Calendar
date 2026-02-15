@@ -177,7 +177,7 @@ export default function Home() {
             {/* Mobile Chat Button */}
             <Button
               className="w-full sm:hidden bg-secondary hover:bg-secondary/80 h-12 text-lg"
-              onClick={() => window.open("https://m.me/yourpage", "_blank")}
+              onClick={() => window.open("https://m.me/smrprimerentals", "SMR PRIME RENTALS")}
             >
               <MessageCircle className="mr-2 w-5 h-5" />
               Chat Support
