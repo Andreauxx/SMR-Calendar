@@ -2,6 +2,7 @@ import "./globals.css";
 import Providers from "./providers";
 import "./fullcalendar.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from "@vercel/analytics/next";
 
 
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Toaster />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
