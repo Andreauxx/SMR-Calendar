@@ -31,19 +31,17 @@ import { format, parseISO } from "date-fns";
 import { useEffect } from "react";
 
 function calcDaysInclusive(startStr: string, endStr: string) {
-  // FullCalendar end is EXCLUSIVE. Your modal display already subtracts 1 day.
-  // For pricing: convert endExclusive -> endInclusive by subtracting 1 day, then inclusive count.
   const start = new Date(startStr);
   const endExclusive = new Date(endStr);
-  const endInclusive = new Date(endExclusive);
-  endInclusive.setDate(endInclusive.getDate() - 1);
 
-  // normalize to midnight to avoid timezone issues
+  // Normalize to midnight to avoid timezone/DST shifts
   start.setHours(0, 0, 0, 0);
-  endInclusive.setHours(0, 0, 0, 0);
+  endExclusive.setHours(0, 0, 0, 0);
 
-  const diffMs = endInclusive.getTime() - start.getTime();
-  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1; // inclusive
+  const diffMs = endExclusive.getTime() - start.getTime();
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24)); 
+  
+  // Ensure at least 1 day is charged
   return Math.max(days, 1);
 }
 
@@ -133,7 +131,7 @@ const form = useForm<BookingRequestForm>({
 
   const selectedAddons = form.watch("addons") ?? [];
 const selectedPackage = form.watch("package") ?? "";
-const PICKUP_LOCATIONS = "Shell Select Bangkal / 7-Eleven Tahimik Avenue";
+const PICKUP_LOCATIONS = "Shell Select Catalunan Grande / DMSF 7-Eleven";
 const fulfillment = form.watch("fulfillment");
 
 const days = startStr && endStr ? calcDaysInclusive(startStr, endStr) : 0;
@@ -145,7 +143,8 @@ const addonsTotal = selectedAddons.reduce((sum, val) => {
 }, 0);
 
 const rentalTotal = days * dailyRate;
-const grandTotal = rentalTotal + addonsTotal;
+const securityDeposit = 500; // Fixed deposit amount
+const grandTotal = rentalTotal + addonsTotal + securityDeposit;
 
   // Update dates when selection changes
   useEffect(() => {
@@ -483,8 +482,14 @@ useEffect(() => {
     <span className="font-semibold">₱{addonsTotal}</span>
   </div>
 
+  {/* NEW: Security Deposit Row */}
+  <div className="flex items-center justify-between text-orange-400">
+    <span className="text-sm">Security Deposit (Refundable)</span>
+    <span className="font-semibold">₱{securityDeposit}</span>
+  </div>
+
   <div className="pt-2 mt-2 border-t border-white/10 flex items-center justify-between">
-    <span className="text-sm font-semibold">Total</span>
+    <span className="text-sm font-semibold">Total to Pay</span>
     <span className="text-lg font-bold text-primary">₱{grandTotal}</span>
   </div>
 

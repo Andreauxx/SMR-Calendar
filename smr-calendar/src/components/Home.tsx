@@ -177,7 +177,9 @@ export default function Home() {
             {/* Mobile Chat Button */}
             <Button
               className="w-full sm:hidden bg-secondary hover:bg-secondary/80 h-12 text-lg"
-              onClick={() => window.open("https://m.me/smrprimerentals", "SMR PRIME RENTALS")}
+              onClick={() =>
+                window.open("https://m.me/smrprimerentals", "SMR PRIME RENTALS")
+              }
             >
               <MessageCircle className="mr-2 w-5 h-5" />
               Chat Support
@@ -204,7 +206,7 @@ export default function Home() {
                     }
                   `}</style>
                   <FullCalendar
-                    initialDate="2026-02-01"
+                    initialDate="2026-04-01"
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView="dayGridMonth"
                     selectable={true}
@@ -221,6 +223,24 @@ export default function Home() {
                     handleWindowResize={true}
                     select={handleDateSelect}
                     dateClick={handleDateClick}
+                    dayCellContent={(arg) => {
+                      // FIX: Adds the "X" to past dates
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      const cellDate = arg.date;
+                      cellDate.setHours(0, 0, 0, 0);
+
+                      if (cellDate < today) {
+                        return (
+                          <div className="relative w-full h-full flex items-center justify-center opacity-30 select-none">
+                            <span className="text-xl font-bold text-muted-foreground">
+                              ✕
+                            </span>
+                          </div>
+                        );
+                      }
+                      return arg.dayNumberText;
+                    }}
                     eventContent={(arg) => {
                       const status = arg.event.extendedProps.status;
                       const isApproved = status === "Approved";
